@@ -1,5 +1,5 @@
 /*
-  Author: 
+  Author: Daniel L
   
   Learning Intention:
   The students will understand the difference between the inbuilt setup and loop methods,
@@ -21,12 +21,22 @@
 
 // The setup function runs once when you press reset or power the board
 void setup() {
-
+  // Setup a seral connection and configure the communication speed
+  Serial.begin(9600);
+  // Debug serial connection by printing a confirmation to the serial monitor
+  Serial.print("Serial monitor is configured to 9600 baud rate");
 }
 
 // The loop function runs over and over again forever
 void loop() {
-
+  Serial.print("Pin-A0: ");
+  Serial.print(analogRead(A0));  
+  Serial.print(", ");
+    Serial.print("Pin-A1: ");
+  Serial.print(analogRead(A1));  
+  Serial.print(", ");
+    Serial.print("Pin-A2: ");
+  Serial.println(analogRead(A2));  
 }
 
 

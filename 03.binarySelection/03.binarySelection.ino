@@ -34,14 +34,23 @@
 
 static unsigned int OnBoardLED = 13;
 static unsigned int LEDonPin8 = 8;
+static unsigned int BUTTONonPin = 5;
 
 void setup() {
   Serial.begin(9600);
   pinMode(OnBoardLED, OUTPUT);
   pinMode(LEDonPin8, OUTPUT);
+  pinMode(BUTTONonPin, INPUT);
 }
 
 void loop() {
-  digitalWrite(OnBoardLED, HIGH);
-  digitalWrite(LEDonPin8, HIGH);
+  bool reading = digitalRead(BUTTONonPin);
+  if (!reading) {
+  digitalWrite(OnBoardLED, 1);
+  digitalWrite(LEDonPin8, 1);
+  } else {
+  digitalWrite(OnBoardLED, 0);
+  digitalWrite(LEDonPin8, 0);
+  }
+
 }

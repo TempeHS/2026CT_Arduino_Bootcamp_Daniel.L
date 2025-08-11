@@ -21,12 +21,30 @@
     https://github.com/TempeHS/TempeHS_Ardunio_Bootcamp/blob/main/05.analogueRead/Bootcamp-analogueRead.png
 */
 
+static unsigned int myVariableResistor = A0;
+unsigned int resistorValue;
+static unsigned int OnBoardLED = 13;
+static unsigned int LEDonPin8 = 8;
 
 void setup() {
-  
+  Serial.begin(9600);
+  // Analogue pins do not need to be configured unless you want to use one as a digital I/O
+  pinMode(OnBoardLED, OUTPUT);
+  pinMode(LEDonPin8, OUTPUT);
 }
 
 void loop() {
-  
+  Serial.print("myVariableResistor: ");
+  resistorValue = analogRead(myVariableResistor);
+  Serial.println(resistorValue);  
+  int light = resistorValue;
+
+  if (resistorValue >= 3) {
+  digitalWrite(OnBoardLED, 0);
+  digitalWrite(LEDonPin8, 1);
+  } else {
+  digitalWrite(OnBoardLED, 1);
+  digitalWrite(LEDonPin8, 0);
+  }
 }
 

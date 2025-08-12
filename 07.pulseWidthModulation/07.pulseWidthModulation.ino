@@ -21,12 +21,28 @@
     https://github.com/TempeHS/TempeHS_Ardunio_Bootcamp/blob/main/07.pulseWidthModulation/Bootcamp-PWMOutput.png
 */
 
-
+static unsigned int redLED = 6;
+static unsigned int onboardLED = 13;
+static unsigned int buttonPIN = 4;
+static unsigned int potPIN = A1;
+bool onSTATE = false;
 
 void setup() {
-  
+  Serial.begin(9600);
+  Serial.println("Serial Monitor Configured for 9600");
+  Serial.println("-----------------");
+  pinMode(onboardLED, OUTPUT);
+  pinMode(redLED, OUTPUT); 
+  pinMode(buttonPIN, INPUT);  
+
 }
 
 void loop() {
-  
+  int read = digitalRead(buttonPIN);
+  Serial.println(read);
+  if (read == true) {
+    onSTATE = !onSTATE;
+  }
+  digitalWrite(onboardLED, onSTATE);
+  delay(200);
 }

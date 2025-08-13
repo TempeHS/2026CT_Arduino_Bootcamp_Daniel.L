@@ -28,7 +28,7 @@ static unsigned int potPIN = A1;
 
 //debounce parameters
 unsigned long lastDebounceTime = 0;
-unsigned long debounceDelay= 50; // miliseconds
+unsigned long debounceDelay= 100; // miliseconds
 int lastButtonState = LOW;
 int buttonState = LOW;
 bool onSTATE = false;
@@ -70,6 +70,8 @@ void loop() {
   if (reading == true) {
     onSTATE = !onSTATE;
   }
+  lastButtonState = reading; // Save for next loop
   digitalWrite(onboardLED, onSTATE);
-  delay(10);
+  digitalWrite(redLED, onSTATE);
+  delay(10); // Small delay for stability
 }

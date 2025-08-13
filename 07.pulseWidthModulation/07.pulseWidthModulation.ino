@@ -1,5 +1,5 @@
 /*
-  Author: 
+  Author: Daniel
 
   Learning Intention:
   The students will learn what 'pulse width modulation' is and how to use it to write
@@ -54,7 +54,7 @@ void loop() {
 
   // If enough time has passed (debounce)
   if ((millis() - lastDebounceTime) > debounceDelay) {
-    
+
     // If button state changed, update debounced state
     if (reading != buttonState) {
       buttonState = reading;

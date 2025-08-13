@@ -25,6 +25,12 @@ static unsigned int redLED = 6;
 static unsigned int onboardLED = 13;
 static unsigned int buttonPIN = 4;
 static unsigned int potPIN = A1;
+
+//debounce parameters
+unsigned long lastDebounceTime = 0;
+unsigned long debounceDelay= 50; // miliseconds
+int lastButtonState = LOW;
+int buttonState = LOW;
 bool onSTATE = false;
 
 void setup() {
@@ -34,15 +40,36 @@ void setup() {
   pinMode(onboardLED, OUTPUT);
   pinMode(redLED, OUTPUT); 
   pinMode(buttonPIN, INPUT);  
+  
 
 }
 
 void loop() {
-  int read = digitalRead(buttonPIN);
-  Serial.println(read);
-  if (read == true) {
+  int reading = digitalRead(buttonPIN);
+
+  // Check if button changed
+  if (reading != lastButtonState) {
+    lastDebounceTime = millis();
+  }
+
+  // If enough time has passed (debounce)
+  if ((millis() - lastDebounceTime) > debounceDelay) {
+    
+    // If button state changed, update debounced state
+    if (reading != buttonState) {
+      buttonState = reading;
+
+      // Only toggle on a HIGH transition (button press)
+        if (reading == true) {
+        onSTATE = !onSTATE;
+      }
+    }
+  }
+
+
+  if (reading == true) {
     onSTATE = !onSTATE;
   }
   digitalWrite(onboardLED, onSTATE);
-  delay(200);
+  delay(10);
 }

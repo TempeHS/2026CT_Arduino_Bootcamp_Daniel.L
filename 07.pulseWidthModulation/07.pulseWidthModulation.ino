@@ -75,7 +75,7 @@ void loop() {
 
   unsigned int dimmer = analogRead(potPIN);
   Serial.println(dimmer);
-  dimmer = map(dimmer, 0, 255, 0 , 1023)
+  dimmer = map(dimmer, 0, 255, 0 , 1023);
 
   if (onSTATE) {
   digitalWrite(onboardLED, dimmer);

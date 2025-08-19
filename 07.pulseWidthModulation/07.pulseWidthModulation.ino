@@ -54,13 +54,12 @@ void loop() {
 
   // If enough time has passed (debounce)
   if ((millis() - lastDebounceTime) > debounceDelay) {
-
     // If button state changed, update debounced state
     if (reading != buttonState) {
       buttonState = reading;
 
       // Only toggle on a HIGH transition (button press)
-        if (reading == true) {
+        if (buttonState == HIGH) {
         onSTATE = !onSTATE;
       }
     }
@@ -70,8 +69,21 @@ void loop() {
   if (reading == true) {
     onSTATE = !onSTATE;
   }
+
   lastButtonState = reading; // Save for next loop
+
+  int dimmer = analogRead(potPIN);
+  Serial.print(dimmer);
+
+  if (onSTATE) {
   digitalWrite(onboardLED, onSTATE);
   digitalWrite(redLED, onSTATE);
-  delay(10); // Small delay for stability
+
+  } else {
+  digitalWrite(onboardLED, false);
+  digitalWrite(redLED, false);
+  }
+
+    delay(10); // Small delay for stability
+
 }

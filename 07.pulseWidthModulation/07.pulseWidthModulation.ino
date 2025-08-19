@@ -67,7 +67,7 @@ void loop() {
   }
 
 
-  if (reading == true) {
+  ;if (reading == true) {
     onSTATE = !onSTATE;
   }
 
@@ -77,13 +77,13 @@ void loop() {
   Serial.println(dimmer);
   dimmer = map(dimmer, 0, 255, 0 , 1023);
 
-  if (onSTATE) {
-  digitalWrite(onboardLED, dimmer);
-  digitalWrite(redLED, dimmer);
+  ;if (onSTATE) {
+  analogWrite(onboardLED, dimmer);
+  analogWrite(redLED, dimmer);
 
   } else {
-  digitalWrite(onboardLED, false);
-  digitalWrite(redLED, false);
+  analogWrite(onboardLED, false);
+  analogWrite(redLED, false);
   }
 
     delay(10); // Small delay for stability

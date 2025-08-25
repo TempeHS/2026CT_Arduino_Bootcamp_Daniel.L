@@ -23,11 +23,32 @@
 */
 
 #include <Servo.h>
+#include "Ultrasonic.h"
+
+Ultrasonic myUltraSonicSensor(5);
+Servo myservo;
+unsigned static int servoPin = 6;
+
+int potpin = A1;
+int val;
 
 void setup() {
-  
+  Serial.begin(9600);
+  myservo.attach(servoPin);
 }
 
 void loop() {
-  
+  unsigned long RangeInCetimeters;
+
+  RangeInCetimeters = myUltraSonicSensor.distanceRead();
+  Serial.print(RangeInCetimeters);
+  Serial.println(" cm");
+  delay(250);
+  RangeInCetimeters = map(RangeInCetimeters, 0, 357, 0, 180);
+  myservo.write(RangeInCetimeters);
+
+  /* val = analogRead(potpin);
+  val = map(val, 0, 1023, 0, 180); 
+  myservo.write(val);
+  delay(15); */
 }

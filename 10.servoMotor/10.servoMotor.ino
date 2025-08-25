@@ -22,19 +22,30 @@
     https://github.com/TempeHS/TempeHS_Ardunio_Bootcamp/blob/main/10.servoMotor/Bootcamp-servoMotor.png
 */
 
+// Includes for OLED Screen
+#include <Arduino.h>
+#include <U8g2lib.h>
+#include <SPI.h>
+#include <Wire.h>
+
 #include <Servo.h>
 #include "Ultrasonic.h"
 
-Ultrasonic myUltraSonicSensor(5);
-Servo myservo;
 unsigned static int servoPin = 6;
+unsigned static int usPin = 5;
+
+Servo myservo;
+Ultrasonic myUltraSonicSensor(usPin);
 
 int potpin = A1;
 int val;
+int slurs = 1;
 
 void setup() {
   Serial.begin(9600);
   myservo.attach(servoPin);
+  Serial.println("Baud 9600");
+  Serial.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 }
 
 void loop() {

@@ -39,13 +39,20 @@ Ultrasonic myUltraSonicSensor(usPin);
 
 int potpin = A1;
 int val;
-int slurs = 1;
+
+// configure oled
+U8G2_SSD1306_128X64_NONAME_F_HW_I1C OLED(U8G2_R0, SCL, SDA, U8X8_PIN_NONE);
 
 void setup() {
-  Serial.begin(9600);
   myservo.attach(servoPin);
+  Serial.begin(9600);
   Serial.println("Baud 9600");
   Serial.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+  OLED.begin();
+  OLED.setFont(u8g2_font_6x12_tf);
+  OLED.drawStr(0, 100, "Version 0.2");
+  delay(3000);
 }
 
 void loop() {

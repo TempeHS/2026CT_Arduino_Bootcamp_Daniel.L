@@ -1,5 +1,5 @@
 /*
-  Author: daniel
+  Author: 
 
   Learning Intention:
   The students will learn how to connect and control a servo motor.

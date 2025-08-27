@@ -53,21 +53,39 @@ void setup() {
   OLED.setFont(u8g2_font_6x12_tf);
   OLED.drawStr(0, 10, "Version 0.2");
   OLED.nextPage();
-  delay(3000);
+  delay(2000);
+  OLED.firstPage();
 }
 
 void loop() {
+
+static String inputString = "";
+static bool stringComplete = false;
+
   unsigned long RangeInCetimeters;
 
   RangeInCetimeters = myUltraSonicSensor.distanceRead();
+
   Serial.print(RangeInCetimeters);
+  Serial.println(" cm");
+  
+  while (Serial.available()) {
+    char inChar = (char)Serial.read();
+    if (inChar == '\n') {
+    stringComplete = true;
+    break;
+  } else if (inChar != '\r') {
+    inputString += inChar;
+  }
+g
+
+ /* Serial.print(RangeInCetimeters);
   Serial.println(" cm");
   delay(250);
   RangeInCetimeters = map(RangeInCetimeters, 0, 357, 0, 180);
   myservo.write(RangeInCetimeters);
 
-  /* val = analogRead(potpin);
+   val = analogRead(potpin);
   val = map(val, 0, 1023, 0, 180); 
   myservo.write(val);
   delay(15); */
-}

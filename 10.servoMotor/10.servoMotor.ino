@@ -33,6 +33,8 @@
 
 unsigned static int servoPin = 6;
 unsigned static int usPin = 5;
+static String inputString = "";
+static bool stringComplete = false;
 
 Servo myservo;
 Ultrasonic myUltraSonicSensor(usPin);
@@ -58,10 +60,6 @@ void setup() {
 }
 
 void loop() {
-
-static String inputString = "";
-static bool stringComplete = false;
-
   unsigned long RangeInCetimeters;
 
   RangeInCetimeters = myUltraSonicSensor.distanceRead();
@@ -69,15 +67,20 @@ static bool stringComplete = false;
   Serial.print(RangeInCetimeters);
   Serial.println(" cm");
   
-  while (Serial.available()) {
+    while (Serial.available()) {
     char inChar = (char)Serial.read();
     if (inChar == '\n') {
     stringComplete = true;
     break;
   } else if (inChar != '\r') {
     inputString += inChar;
-  }
-g
+  }}
+
+  OLED.setFont(u8g2_font_6x12_tf); 
+  OLED.drawStr(0, 10, inputString);
+  OLED.nextPage();
+  delay(250);
+
 
  /* Serial.print(RangeInCetimeters);
   Serial.println(" cm");
@@ -89,3 +92,4 @@ g
   val = map(val, 0, 1023, 0, 180); 
   myservo.write(val);
   delay(15); */
+}

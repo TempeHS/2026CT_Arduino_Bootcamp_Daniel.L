@@ -77,7 +77,7 @@ void loop() {
   }}
 
   OLED.setFont(u8g2_font_6x12_tf); 
-  OLED.drawStr(0, 10, inputString);
+  OLED.drawStr(0, 10, "asd");
   OLED.nextPage();
   delay(250);
 

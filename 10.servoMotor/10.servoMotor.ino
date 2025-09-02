@@ -62,12 +62,32 @@ void setup() {
 void loop() {
   unsigned long RangeInCetimeters;
 
+  String inputString = "10 cm";
+  String cleanString = "";
   RangeInCetimeters = myUltraSonicSensor.distanceRead();
 
   Serial.print(RangeInCetimeters);
   Serial.println(" cm");
   
-    while (Serial.available()) {
+  for (unsigned int i = 0; i < inputString.length(); i++) {
+    char inChar = inputString[i];
+    if (inChar != '\n' && inChar != '\r') {
+      cleanString += inChar;
+    }
+  if(inChar == '\n'){
+    cleanString += '_';
+  }
+  }
+
+
+  OLED.setFont(u8g2_font_6x12_tf); 
+
+  OLED.nextPage();
+  delay(250);
+
+
+ /* 
+ while (Serial.available()) {
     char inChar = (char)Serial.read();
     if (inChar == '\n') {
     stringComplete = true;
@@ -76,13 +96,7 @@ void loop() {
     inputString += inChar;
   }}
 
-  OLED.setFont(u8g2_font_6x12_tf); 
-  OLED.drawStr(0, 10, "asd");
-  OLED.nextPage();
-  delay(250);
-
-
- /* Serial.print(RangeInCetimeters);
+ Serial.print(RangeInCetimeters);
   Serial.println(" cm");
   delay(250);
   RangeInCetimeters = map(RangeInCetimeters, 0, 357, 0, 180);

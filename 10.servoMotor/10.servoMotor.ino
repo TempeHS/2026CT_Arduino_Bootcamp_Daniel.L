@@ -33,11 +33,10 @@
 
 unsigned static int servoPin = 6;
 unsigned static int usPin = 5;
-static String inputString = "";
-static bool stringComplete = false;
+static unsigned int LED = 8;
 
 Servo myservo;
-Ultrasonic myUltraSonicSensor(usPin);
+Ultrasonic us_sensor(usPin);
 
 int potpin = A1;
 int val;
@@ -46,64 +45,38 @@ int val;
 U8G2_SSD1306_128X64_NONAME_F_HW_I2C OLED(U8G2_R0, SCL, SDA, U8X8_PIN_NONE);
 
 void setup() {
+  pinMode(LED, OUTPUT);
   myservo.attach(servoPin);
   Serial.begin(9600);
   Serial.println("Baud 9600");
-  Serial.println("--------------------------------------------------------------");
-
+  Serial.println("------------------------");
   OLED.begin();
-  OLED.setFont(u8g2_font_6x12_tf);
-  OLED.drawStr(0, 10, "Version 0.2");
-  OLED.nextPage();
-  delay(2000);
-  OLED.firstPage();
+
 }
 
 void loop() {
-  unsigned long RangeInCetimeters;
+  OLED.clearBuffer();
+  unsigned long range_in_cm;
+  int mapped_range_in_cm = 0;
+  range_in_cm = us_sensor.distanceRead();
+  String cleanString = String(range_in_cm);
 
-  String inputString = "10 cm";
-  String cleanString = "";
-  RangeInCetimeters = myUltraSonicSensor.distanceRead();
+  mapped_range_in_cm = map(range_in_cm, 0, 100, 0, 180);
 
-  Serial.print(RangeInCetimeters);
-  Serial.println(" cm");
+  String cleanDistance = String(mapped_range_in_cm);
   
-  for (unsigned int i = 0; i < inputString.length(); i++) {
-    char inChar = inputString[i];
-    if (inChar != '\n' && inChar != '\r') {
-      cleanString += inChar;
-    }
-  if(inChar == '\n'){
-    cleanString += '_';
-  }
-  }
-
-
-  OLED.setFont(u8g2_font_6x12_tf); 
-
+  OLED.setFont(u8g2_font_6x12_tf);
+  OLED.drawStr(0, 10, cleanString.c_str());
+  OLED.drawStr(0, 20, cleanDistance.c_str());
   OLED.nextPage();
-  delay(250);
+  myservo.write(mapped_range_in_cm);
+
+if(range_in_cm < 10.5) {
+  digitalWrite(LED, 1);
+  delay(5);
+  } else {
+  digitalWrite(LED, 0);
+}
 
 
- /* 
- while (Serial.available()) {
-    char inChar = (char)Serial.read();
-    if (inChar == '\n') {
-    stringComplete = true;
-    break;
-  } else if (inChar != '\r') {
-    inputString += inChar;
-  }}
-
- Serial.print(RangeInCetimeters);
-  Serial.println(" cm");
-  delay(250);
-  RangeInCetimeters = map(RangeInCetimeters, 0, 357, 0, 180);
-  myservo.write(RangeInCetimeters);
-
-   val = analogRead(potpin);
-  val = map(val, 0, 1023, 0, 180); 
-  myservo.write(val);
-  delay(15); */
 }

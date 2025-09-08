@@ -62,21 +62,17 @@ void loop() {
   String cleanString = String(range_in_cm);
 
   mapped_range_in_cm = map(range_in_cm, 0, 100, 0, 180);
-
   String cleanDistance = String(mapped_range_in_cm);
   
+  if(range_in_cm < 10.5) {
+  digitalWrite(LED, 1);
+  } else {
+  digitalWrite(LED, 0);
+}
+
   OLED.setFont(u8g2_font_6x12_tf);
   OLED.drawStr(0, 10, cleanString.c_str());
   OLED.drawStr(0, 20, cleanDistance.c_str());
   OLED.nextPage();
   myservo.write(mapped_range_in_cm);
-
-if(range_in_cm < 10.5) {
-  digitalWrite(LED, 1);
-  delay(5);
-  } else {
-  digitalWrite(LED, 0);
-}
-
-
 }
